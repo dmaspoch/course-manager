@@ -2,8 +2,8 @@ const path = require('path');
 
 const express = require('express');
 
-const homeController = require('../controllers/home');
-const courseController = require('../controllers/course');
+const homeController = require('../controllers/homeController');
+const courseController = require('../controllers/courseController');
 
 const router = express.Router();
 

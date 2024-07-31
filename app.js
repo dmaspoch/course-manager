@@ -3,7 +3,7 @@ const sequelize = require("./util/database");
 const path = require("path");
 const express = require("express");
 const expressHbs = require("express-handlebars");
-const courseController = require("./controllers/course");
+const courseController = require("./controllers/courseController");
 const bodyParser = require('body-parser');
 
 const Course = require("./models/course");
