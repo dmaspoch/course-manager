@@ -1,6 +1,7 @@
+
 exports.getCreateHome = (req, res, next) => {
   res.render("./home", {
-    pageTitle: "Home", 
+    pageTitle: "Home",
     bodyText: "Placeholder text",
   });
 };

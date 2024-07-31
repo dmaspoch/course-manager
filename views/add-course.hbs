@@ -1,22 +1,25 @@
 <h1>{{pageTitle}}</h1>
-<form method="POST" action="/add-course">
+<form method="POST" action=
+"{{#if editing}}/edit-course{{else}}/add-course{{/if}}">
+
     <div class="col">
         <div class="item">
             <label>Name</label>
-            <input name="name">
+            <input name="name" value="{{#if editing}}{{course.name}}{{/if}}">
         </div>
         <div class="item">
             <label>Professor</label>
-            <input name="prof">
+            <input name="prof" value="{{#if editing}}{{course.prof}}{{/if}}">
         </div>
         <div class="item">
             <label>Duration</label>
-            <input name="duration">
+            <input name="duration" value="{{#if editing}}{{course.duration}}{{/if}}">
         </div>
         <div class="item">
             <label>Credits</label>
-            <input name="credits">
+            <input name="credits" value="{{#if editing}}{{course.credits}}{{/if}}">
         </div>
     </div>
+    {{#if editing}}<input type="hidden" value="{{course.id}}" name="courseId">{{/if}}
     <button type="submit">Submit</button>
 </form>

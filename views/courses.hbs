@@ -1,9 +1,13 @@
 {{!-- {{#if gt courseList 0}} --}}
 <h1>{{pageTitle}}</h1>
 {{#each courses}}
-<h2>{{this.name}}</h2>
+<h2>{{name}}</h2>
 <p>{{prof}}</p>
 <p>{{duration}}</p>
 <p>{{credits}}</p>
+<a href="/edit-course/{{id}}?edit=true">Edit Course</a>
+<form action="/delete-course" method="POST">
+    <input type="hidden" value="{{id}}" name="id">
+    <button class="btn" type="submit">Delete</button>
+</form>
 {{/each}}
-{{!-- {{/if}} --}}

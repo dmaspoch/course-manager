@@ -8,26 +8,58 @@ exports.getCreateCourse = (req, res, next) => {
 };
 
 exports.addCourse = (req, res, next) => {
-  console.log("Get request");
   res.render("./add-course", {
     pageTitle: "Add Course",
+    path: '/add-product',
     editing: false
   });
 };
 
+exports.getEditCourse = async (req, res, next) => {
+  const courseId = req.params.id;
+  const data = await Course.findByPk(courseId);
+  const course = data.toJSON();
+  res.render("./add-course", {
+    pageTitle: "Edit Course",
+    path: '/edit-product',
+    course: course,
+    editing: true
+  });
+}
+
 exports.postAddCourse = async (req, res, next) => {
-  const course = {
-    name: req.body.name,
-    prof: req.body.prof,
-    duration: req.body.duration,
-    credits: req.body.credits
-  };
-  await Course.create(course);
-  const courses = await Course.findAll({raw: true});
-  console.log(courses);
+  const courseId = req.body.courseId; // Get the course ID from the form
+  if (courseId) { // If a course ID is present, update the course
+    await Course.update(req.body, { where: { id: courseId } });
+  } else { // Otherwise, create a new course
+    const course = {
+      name: req.body.name,
+      prof: req.body.prof,
+      duration: req.body.duration,
+      credits: req.body.credits
+    };
+    await Course.create(course);
+  }
+  res.redirect('/courses');
+};
+
+
+exports.postDeleteCourse = (req, res, next) => {
+  const courseId = req.body.id;
+  Course.findByPk(courseId)
+    .then(course => {
+      return course.destroy();
+    })
+    .then(result => {
+      res.redirect('/courses');
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getCourses = async (req, res, next) => {
+  const courses = await Course.findAll({ raw: true });
   res.render('./courses', {
     pageTitle: "Course Information",
     courses: courses
   });
-
 }
