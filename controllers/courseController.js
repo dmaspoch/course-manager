@@ -44,16 +44,12 @@ exports.postAddCourse = async (req, res, next) => {
 };
 
 
-exports.postDeleteCourse = (req, res, next) => {
+exports.postDeleteCourse = async(req, res, next) => {
   const courseId = req.body.id;
-  Course.findByPk(courseId)
-    .then(course => {
-      return course.destroy();
-    })
-    .then(result => {
-      res.redirect('/courses');
-    })
-    .catch(err => console.log(err));
+  const data = await Course.findByPk(courseId);
+  const course = data.toJSON();
+  data.destroy();
+  res.redirect('/courses');
 };
 
 exports.getCourses = async (req, res, next) => {

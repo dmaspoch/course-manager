@@ -6,6 +6,9 @@
 <p>{{duration}}</p>
 <p>{{credits}}</p>
 <a href="/edit-course/{{id}}?edit=true">Edit Course</a>
+{{!-- <a href="/lectures">View Lectures</a> --}}
+
+ <a href="/lectures/{{id}}" value="{{id}}" name="id">View Lectures</a>
 <form action="/delete-course" method="POST">
     <input type="hidden" value="{{id}}" name="id">
     <button class="btn" type="submit">Delete</button>

@@ -8,9 +8,11 @@ const bodyParser = require('body-parser');
 
 const Course = require("./models/course");
 const User = require("./models/user");
+const Lecture = require("./models/lecture");
 
 const courseRoute = require('./routes/courseRoute');
 const homeRoute = require('./routes/homeRoute');
+const lectureRoute = require('./routes/lectureRoute');
 
 if (env.error) {
   throw new Error("Failed to load .env file");
@@ -44,21 +46,16 @@ app.use((req, res, next) => {
 
 app.use(homeRoute);
 app.use(courseRoute);
+app.use(lectureRoute);
 
-// app.use(fitnessRoutes);
-// app.use(errorController.get404);
+Course.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Course);
+Course.hasMany(Lecture);
+Lecture.belongsTo(Course);
 
-// Plan.belongsTo(Profile);
-// Profile.hasOne(Plan);
-
-// Plan.hasMany(Session);
-// Session.belongsTo(Plan);
-
-// Session.hasMany(Exercise);
-// Exercise.belongsTo(Session);
-
+// force:true forces any changes made to the table (i.e. extra fields)
 sequelize
-  .sync()
+  .sync(/*{force: true}*/)
   .then((result) => {
     return User.findByPk(1);
   })

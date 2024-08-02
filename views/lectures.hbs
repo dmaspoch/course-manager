@@ -1,0 +1,13 @@
+{{!-- {{#if gt courseList 0}} --}}
+<h1>{{pageTitle}}</h1>
+<h2>Course: {{name}}</h2>
+<a href="/add-lecture/{{courseId}}">Add Lecture</a>
+{{#each lectures}}
+<h2>{{name}}</h2>
+<p>{{date}}</p>
+<a href="/edit-lecture/{{id}}?edit=true">Edit Lecture</a>
+<form action="/delete-lecture" method="POST">
+    <input type="hidden" value="{{id}}" name="id">
+    <button class="btn" type="submit">Delete</button>
+</form>
+{{/each}}
