@@ -1,6 +1,10 @@
 const path = require('path');
 const express = require('express');
+
+// Multer is middleware for handling multipart/form-data , which is primarily used for uploading files
 const multer = require('multer');
+
+// Sets a destination directory for uploaded files
 const upload = multer({ dest: './uploads/' });
 
 const courseController = require('../controllers/courseController');
@@ -17,11 +21,10 @@ router.post('/edit-lecture', lectureController.postAddLecture);
 router.post('/delete-lecture', lectureController.postDeleteLecture);
 router.get('/lectures/:courseId', lectureController.getLectures);
 
+// .single returns middleware that processes a single file associated with the given form field ('lecture')
 router.post('/upload', upload.single('lecture'), (req, res) => {
     // req.file contains the uploaded file
-    // req.body contains the entire request body
     const fileName = req.file.originalname;
-    // Save the file name to your database or a variable
     res.send(`File uploaded successfully! ${fileName}`);
   });
 
