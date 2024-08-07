@@ -5,9 +5,16 @@
 {{#each lectures}}
 <h2>{{name}}</h2>
 <p>{{date}}</p>
+<p>{{fileName}}</p>
 <a href="/edit-lecture/{{id}}?edit=true">Edit Lecture</a>
 <form action="/delete-lecture" method="POST">
     <input type="hidden" value="{{id}}" name="id">
     <button class="btn" type="submit">Delete</button>
 </form>
 {{/each}}
+<form action="/upload"
+    enctype="multipart/form-data" method="POST"> 
+        <span>Upload Lecture:</span> 
+        <input type="file" name="lecture" required/> <br> 
+        <input type="submit" value="submit"> 
+    </form> 
