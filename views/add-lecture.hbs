@@ -1,6 +1,5 @@
 <h1>{{pageTitle}}</h1>
-<form method="POST" action=
-"{{#if editing}}/edit-lecture{{else}}/add-lecture{{/if}}">
+<form method="POST" enctype="multipart/form-data" action="{{#if editing}}/edit-lecture{{else}}/add-lecture{{/if}}">
 
     <div class="col">
         <div class="item">
@@ -18,5 +17,7 @@
     {{else}}
     <input type="hidden" value="{{courseId}}" name="courseId">
     {{/if}}
+    <span>Upload Lecture:</span>
+    <input type="file" name="lecture" required /> <br>
     <button type="submit">Submit</button>
 </form>

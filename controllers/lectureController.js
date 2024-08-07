@@ -32,8 +32,9 @@ exports.postAddLecture = async (req, res, next) => {
       date: req.body.date,
       courseId: courseId
     };
+    const fileName = req.file.originalname;
     await Lecture.create(lecture);
-
+    console.log("File uploaded successfully");
   }
   res.redirect('/lectures/' + courseId);
 };
