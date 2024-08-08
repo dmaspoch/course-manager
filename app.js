@@ -14,6 +14,7 @@ const courseRoute = require('./routes/courseRoute');
 const homeRoute = require('./routes/homeRoute');
 const lectureRoute = require('./routes/lectureRoute');
 
+
 if (env.error) {
   throw new Error("Failed to load .env file");
 }

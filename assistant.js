@@ -1,7 +1,40 @@
-import OpenAI from "openai";
-import fs from "node:fs";
+// import OpenAI from "openai";
+// import fs from "node:fs";
 
+// const openai = new OpenAI();
+const OpenAI = require("openai");
 const openai = new OpenAI();
+const fs = require('fs');
+
+async function summarize(assistant_id) {
+    const thread = await openai.beta.threads.create();
+    const message = await openai.beta.threads.messages.create(
+        thread.id,
+        {
+            role: "user",
+            content: "Please summarize the file provided in the vector store"
+        }
+    );
+    let run = await openai.beta.threads.runs.createAndPoll(
+        thread.id,
+        {
+            assistant_id: assistant_id,
+            //   instructions: "Please address the user as Jane Doe. The user has a premium account."
+        }
+    );
+    if (run.status === 'completed') {
+        const messages = await openai.beta.threads.messages.list(
+            run.thread_id
+        );
+        const result = messages.data.filter((message) => message.role === "assistant");
+        console.log(result[0].content[0].text.value);
+        // for (const message of messages.data.reverse()) {
+        //     console.log(`${message.role} > ${message.content[0].text.value}`);
+        // }
+    } else {
+        console.log(run.status);
+    }
+}
 
 async function createAssistant() {
     // Step 1: Create a new Assistant with File Search Enabled
@@ -76,13 +109,13 @@ async function main() {
 
     // const assistant = await createAssistant();
     // const vectorStore = await createVectorStore();
-    // const filePath = 'lectures/Week01-Fall_2024.pdf';
-    // const assistantId = assistant.id;
-    // const vectorStoreId = vectorStore.id;
-    // await uploadFileToVectorStore(assistantId, vectorStoreId, filePath);
-    const vectorStoreId = 'vs_E0T6bn89kRsoYJSTJNrlyBOU';
+    const filePath = 'lectures/Week02-Fall_2024.pdf';
+    const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
+    const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
+    await uploadFileToVectorStore(assistantId, vectorStoreId, filePath);
     const fileId = 'file-OSspzBT3tB25CrAdnwdJ6VEd';
-    await deleteFileFromVectorStore(vectorStoreId, fileId);
+    await summarize(assistantId);
+    // await deleteFileFromVectorStore(vectorStoreId, fileId);
 }
 
 main();
