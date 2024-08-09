@@ -28,28 +28,60 @@ exports.postAddLecture = async (req, res, next) => {
   if (lectureId) {
     await Lecture.update(req.body, { where: { id: lectureId } });
   } else {
-    const lecture = {
-      name: req.body.name,
-      date: req.body.date,
-      courseId: courseId
-    };
-
     try {
+      const course = await Course.findByPk(courseId);
+      if (!course) {
+        throw new Error('Course not found');
+      }
+
       const fileName = req.file.originalname;
       const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
       const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
       await Assistant.uploadFileToVectorStore(assistantId, vectorStoreId, req.file.path);
-      lecture.summary = await Assistant.summarize(assistantId);
-      await Lecture.create(lecture);
-      console.log(lecture);
-    }
-    catch
-    {
-      err => console.log(err);
+      const summary = await Assistant.summarize(assistantId);
+      const lecture = await course.createLecture({
+        name: req.body.name,
+        date: req.body.date,
+        summary: summary
+      });
+      await lecture.save();
+    } catch (err) {
+      console.log(err);
     }
   }
   res.redirect('/lectures/' + courseId);
 };
+
+// exports.postAddLecture = async (req, res, next) => {
+//   const courseId = req.body.courseId;
+//   const lectureId = req.body.lectureId;
+//   console.log("Course ID: " + courseId);
+//   if (lectureId) {
+//     await Lecture.update(req.body, { where: { id: lectureId } });
+//   } else {
+//     const lecture = {
+//       name: req.body.name,
+//       date: req.body.date,
+//       courseId: courseId
+//     };
+
+//     try {
+//       const fileName = req.file.originalname;
+//       const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
+//       const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
+//       await Assistant.uploadFileToVectorStore(assistantId, vectorStoreId, req.file.path);
+//       lecture.summary = await Assistant.summarize(assistantId);
+//       await Lecture.create(lecture);
+//       const course = await Course.findByPk(courseId);
+//       await lecture.save();
+//     }
+//     catch
+//     {
+//       err => console.log(err);
+//     }
+//   }
+//   res.redirect('/lectures/' + courseId);
+// };
 
 exports.getLectures = async (req, res, next) => {
   const courseId = req.params.courseId;

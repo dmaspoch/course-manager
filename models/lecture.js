@@ -18,7 +18,7 @@ const Lecture = sequelize.define("lecture", {
     allowNull: false,
   },
   summary: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT('long'),
     allowNull: false,
   }
 });
