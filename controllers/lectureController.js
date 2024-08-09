@@ -1,5 +1,6 @@
 const Lecture = require("../models/lecture");
 const Course = require("../models/course");
+const Assistant = require("../assistant");
 
 exports.addLecture = (req, res, next) => {
   res.render("./add-lecture", {
@@ -32,9 +33,20 @@ exports.postAddLecture = async (req, res, next) => {
       date: req.body.date,
       courseId: courseId
     };
-    const fileName = req.file.originalname;
-    await Lecture.create(lecture);
-    console.log("File uploaded successfully");
+
+    try {
+      const fileName = req.file.originalname;
+      const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
+      const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
+      await Assistant.uploadFileToVectorStore(assistantId, vectorStoreId, req.file.path);
+      lecture.summary = await Assistant.summarize(assistantId);
+      await Lecture.create(lecture);
+      console.log(lecture);
+    }
+    catch
+    {
+      err => console.log(err);
+    }
   }
   res.redirect('/lectures/' + courseId);
 };

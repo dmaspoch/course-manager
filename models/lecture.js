@@ -17,6 +17,10 @@ const Lecture = sequelize.define("lecture", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  summary: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
 });
 
 module.exports = Lecture;

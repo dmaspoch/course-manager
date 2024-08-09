@@ -5,7 +5,14 @@ const express = require('express');
 const multer = require('multer');
 
 // Sets a destination directory for uploaded files
-const upload = multer({ dest: './uploads/' });
+// const upload = multer({ dest: './uploads/' });
+const storage = multer.diskStorage({
+    dest: './uploads/',
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    }
+  });
+  const upload = multer({ storage: storage});
 
 const courseController = require('../controllers/courseController');
 const lectureController = require('../controllers/lectureController');
