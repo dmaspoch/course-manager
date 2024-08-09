@@ -7,7 +7,7 @@ const multer = require('multer');
 // Sets a destination directory for uploaded files
 // const upload = multer({ dest: './uploads/' });
 const storage = multer.diskStorage({
-    dest: './uploads/',
+    dest: 'uploads/',
     filename: (req, file, cb) => {
       cb(null, file.originalname);
     }
@@ -21,6 +21,8 @@ const router = express.Router();
 
 router.get('/add-lecture/:courseId', lectureController.addLecture);
 router.post('/add-lecture', upload.single('lecture'), lectureController.postAddLecture);
+
+router.get('/summary/:lectureId', lectureController.getSummary);
 
 router.get('/edit-lecture/:lectureId', lectureController.getEditLecture);
 router.post('/edit-lecture', lectureController.postAddLecture);

@@ -21,6 +21,17 @@ exports.getEditLecture = async (req, res, next) => {
   });
 }
 
+exports.getSummary = async (req, res, next) => {
+  const lectureId = req.params.lectureId;
+  const data = await Lecture.findByPk(lectureId);
+  const lecture = data.toJSON();
+  res.render("./summary", {
+    lecture: lecture,
+    pageTitle: lecture.name + " :Summary",
+    body: lecture.summary
+  });
+}
+
 exports.postAddLecture = async (req, res, next) => {
   const courseId = req.body.courseId;
   const lectureId = req.body.lectureId;
@@ -34,54 +45,21 @@ exports.postAddLecture = async (req, res, next) => {
         throw new Error('Course not found');
       }
 
-      const fileName = req.file.originalname;
-      const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
-      const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
-      await Assistant.uploadFileToVectorStore(assistantId, vectorStoreId, req.file.path);
-      const summary = await Assistant.summarize(assistantId);
+      const fileId = await Assistant.uploadFileToVectorStore(process.env.ASSISTANT_ID, process.env.VECTOR_STORE_ID, req.file.path);
+      const summary = await Assistant.summarize(process.env.ASSISTANT_ID);
       const lecture = await course.createLecture({
         name: req.body.name,
         date: req.body.date,
         summary: summary
       });
       await lecture.save();
+      await Assistant.deleteFileFromVectorStore(process.env.VECTOR_STORE_ID, fileId);
     } catch (err) {
       console.log(err);
     }
   }
   res.redirect('/lectures/' + courseId);
 };
-
-// exports.postAddLecture = async (req, res, next) => {
-//   const courseId = req.body.courseId;
-//   const lectureId = req.body.lectureId;
-//   console.log("Course ID: " + courseId);
-//   if (lectureId) {
-//     await Lecture.update(req.body, { where: { id: lectureId } });
-//   } else {
-//     const lecture = {
-//       name: req.body.name,
-//       date: req.body.date,
-//       courseId: courseId
-//     };
-
-//     try {
-//       const fileName = req.file.originalname;
-//       const assistantId = 'asst_CUrTjgEIFNuBHbQBiB3s7Jbx';
-//       const vectorStoreId = 'vs_aYbmBxcgXEi12rXYCqavM8Pl';
-//       await Assistant.uploadFileToVectorStore(assistantId, vectorStoreId, req.file.path);
-//       lecture.summary = await Assistant.summarize(assistantId);
-//       await Lecture.create(lecture);
-//       const course = await Course.findByPk(courseId);
-//       await lecture.save();
-//     }
-//     catch
-//     {
-//       err => console.log(err);
-//     }
-//   }
-//   res.redirect('/lectures/' + courseId);
-// };
 
 exports.getLectures = async (req, res, next) => {
   const courseId = req.params.courseId;

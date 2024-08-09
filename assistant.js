@@ -63,8 +63,6 @@ module.exports =
                 purpose: "assistants",
             });
     
-            console.log("File uploaded successfully. File ID:", file.id);
-    
             // Attach the file to the vector store
             const vectorStoreFile = await openai.beta.vectorStores.files.create(
                 vectorStoreId,
@@ -72,8 +70,6 @@ module.exports =
                     file_id: file.id,
                 },
             );
-            console.log(vectorStoreFile);
-            console.log("File attached to vector store successfully.");
     
             // Associate vector store with assistant
             const assistant = await openai.beta.assistants.update(assistantId, {
@@ -83,8 +79,9 @@ module.exports =
                     },
                 },
             });
-    
-            console.log("Updated assistant:", assistant);
+
+            return file.id;
+
         } catch (error) {
             console.error("Error:", error);
         }
