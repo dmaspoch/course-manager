@@ -4,13 +4,13 @@
 <div class="card-container">
 
     {{#each courses}}
-    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="card">
         <a href="#">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{name}}</h5>
         </a>
-        <p class="font-normal text-gray-700 dark:text-gray-400">Professor: {{prof}}</p>
-        <p class="font-normal text-gray-700 dark:text-gray-400">Duration: {{duration}}</p>
-        <p class="font-normal text-gray-700 dark:text-gray-400">Credits: {{credits}}</p>
+        <p>Professor: {{prof}}</p>
+        <p>Duration: {{duration}}</p>
+        <p>Credits: {{credits}}</p>
         <div class="flex mt-3">
             <form action="/delete-course" method="POST">
                 <input type="hidden" value="{{id}}" name="id">
@@ -19,19 +19,8 @@
                 </button>
             </form>
             <a class="btn" href="/edit-course/{{id}}?edit=true">Edit</a>
+            <a class="btn" href="/lectures/{{id}}" value="{{id}}" name="id">View Lectures</a>
         </div>
     </div>
     {{/each}}
 </div>
-
-
-{{!-- <h2>{{name}}</h2>
-<p>{{prof}}</p>
-<p>{{duration}}</p>
-<p>{{credits}}</p>
-<a href="/edit-course/{{id}}?edit=true">Edit Course</a>
-<a href="/lectures/{{id}}" value="{{id}}" name="id">View Lectures</a>
-<form action="/delete-course" method="POST">
-    <input type="hidden" value="{{id}}" name="id">
-    <button class="btn" type="submit">Delete</button>
-</form> --}}

@@ -1,55 +1,32 @@
 <form method="POST" class="max-w-md mx-auto" action="{{#if editing}}/edit-course{{else}}/add-course{{/if}}">
     <div class="relative z-0 w-full mb-5 group">
         <input name="name" value="{{#if editing}}{{course.name}}{{/if}}"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" " required />
+            class="form peer"
+            placeholder="" required />
         <label
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Course
-            Name</label>
+            class="form-click">Course Name</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
         <input name="prof" value="{{#if editing}}{{course.prof}}{{/if}}"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" " required />
+            class="form peer"
+            placeholder="" required />
         <label
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Professor</label>
+            class="form-click">Professor</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
         <input name="duration" value="{{#if editing}}{{course.duration}}{{/if}}"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" " required />
+            class="form peer"
+            placeholder="" required />
         <label
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Duration</label>
+            class="form-click">Duration</label>
     </div>
     <div class="relative z-0 w-full mb-5 group">
         <input name="credits" value="{{#if editing}}{{course.credits}}{{/if}}"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" " required />
+            class="form peer"
+            placeholder="" required />
         <label
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Credits</label>
+            class="form-click">Credits</label>
     </div>
     {{#if editing}}<input type="hidden" value="{{course.id}}" name="courseId">{{/if}}
     <button type="submit" class="btn">Submit</button>
-
-
-    {{!-- <div class="col">
-        <div class="item">
-            <label>Name</label>
-            <input name="name" value="{{#if editing}}{{course.name}}{{/if}}">
-        </div>
-        <div class="item">
-            <label>Professor</label>
-            <input name="prof" value="{{#if editing}}{{course.prof}}{{/if}}">
-        </div>
-        <div class="item">
-            <label>Duration</label>
-            <input name="duration" value="{{#if editing}}{{course.duration}}{{/if}}">
-        </div>
-        <div class="item">
-            <label>Credits</label>
-            <input name="credits" value="{{#if editing}}{{course.credits}}{{/if}}">
-        </div>
-    </div>
-    {{#if editing}}<input type="hidden" value="{{course.id}}" name="courseId">{{/if}}
-    <button type="submit">Submit</button> --}}
 </form>
