@@ -1,5 +1,28 @@
-{{!-- {{#if gt courseList 0}} --}}
-<h1>{{pageTitle}}</h1>
+<h5 class="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{pageTitle}}</h5>
+<a class="btn" href="/add-lecture/{{courseId}}">Add Lecture</a>
+
+<div class="card-container">
+    {{#each courses}}
+    <div class="card">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Course: {{name}}</h5>
+        </a>
+        <p>Date: {{date}}</p>
+        <p>File Name: {{fileName}}</p>
+        <p>Credits: {{credits}}</p>
+        <div class="flex mt-3">
+            <form action="/delete-lecture" method="POST">
+                <input type="hidden" value="{{id}}" name="id">
+                <button class="btn">Delete</button>
+            </form>
+            <a class="btn" href="/edit-lecture/{{id}}?edit=true">Edit</a>
+            <a class="btn" href="/summary/{{id}}">View Summary</a>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{!-- <h1>{{pageTitle}}</h1>
 <h2>Course: {{name}}</h2>
 <a href="/add-lecture/{{courseId}}">Add Lecture</a>
 {{#each lectures}}
@@ -12,4 +35,4 @@
     <button class="btn" type="submit">Delete</button>
 </form>
 <a href="/summary/{{id}}">View Summary</a>
-{{/each}}
+{{/each}} --}}
